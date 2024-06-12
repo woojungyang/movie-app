@@ -10,7 +10,7 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { windowHeight, windowWidth } from '../utilities';
 
-export default function MovieList({ title, data }) {
+export default function MovieList({ title, data, hideSeeAll = false }) {
   let movieName = 'InsideOut';
   const navigation = useNavigation();
 
@@ -18,9 +18,11 @@ export default function MovieList({ title, data }) {
     <View className="mb-8 space-y-4">
       <View className="mx-4 flex-row justify-between items-center">
         <Text className="text-white text-xl">{title}</Text>
-        <TouchableOpacity>
-          <Text className="text-accent-dark text-lg">See All</Text>
-        </TouchableOpacity>
+        {!hideSeeAll && (
+          <TouchableOpacity>
+            <Text className="text-accent-dark text-lg">See All</Text>
+          </TouchableOpacity>
+        )}
       </View>
       <ScrollView
         horizontal
@@ -29,10 +31,7 @@ export default function MovieList({ title, data }) {
       >
         {data?.map((item, index) => {
           return (
-            <TouchableWithoutFeedback
-              key={index}
-              onPress={() => navigation.navigate('Movie', item)}
-            >
+            <TouchableWithoutFeedback key={index} onPress={() => navigation.push('Movie', item)}>
               <View className="space-y-1 mr-4">
                 <Image
                   source={require('../assets/movie2.jpg')}

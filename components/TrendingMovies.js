@@ -12,7 +12,7 @@ export default function TrendingMovies({ data }) {
   }
   return (
     <View className="mb-8">
-      <Text className="text-white text-xl mx-4 mb-5">trendingMovies</Text>
+      <Text className="text-white text-xl mx-4 mb-5">Trending</Text>
 
       <Carousel
         data={data}

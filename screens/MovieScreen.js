@@ -1,12 +1,11 @@
 import { View, Text, ScrollView, TouchableOpacity, Dimensions, Image } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { ChevronLeftIcon } from 'react-native-heroicons/outline';
-import { HeartIcon } from 'react-native-heroicons/solid';
 import { isPlatformIos, windowHeight, windowWidth } from '../utilities';
 import { LinearGradient } from 'expo-linear-gradient';
 import Cast from '../components/Cast';
+import MovieList from '../components/MovieList';
+import DefaultHeader from '../components/DefaultHeader';
 
 export default function MovieScreen() {
   let movieName = 'InsideOut';
@@ -17,25 +16,19 @@ export default function MovieScreen() {
   const topMargin = isPlatformIos ? '' : 'mt-3';
 
   const [cast, setCast] = useState([1, 2, 3, 4, 5]);
+  const [similarMovies, setSimilarMovies] = useState([1, 2, 3, 4, 5]);
 
   useEffect(() => {}, [item]);
 
   return (
     <ScrollView contentContainerStyle={{ paddingBottom: 20 }} className="flex-1 bg-gray-900">
       <View className="w-full">
-        <SafeAreaView
-          className={'absolute z-20 w-full flex-row justify-between items-center px-4' + topMargin}
-        >
-          <TouchableOpacity
-            className="rounded-xl p-1 bg-accent"
-            onPress={() => navigation.goBack()}
-          >
-            <ChevronLeftIcon size="28" strokeWidth={2.5} color="white" />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setIsFavorite(!isFavorite)}>
-            <HeartIcon size="35" color={isFavorite ? '#ffcc4d' : 'white'} />
-          </TouchableOpacity>
-        </SafeAreaView>
+        <DefaultHeader
+          isFavorite={isFavorite}
+          setIsFavorite={setIsFavorite}
+          intervalMargin={topMargin}
+          isAbsolute={true}
+        />
         <View>
           <Image
             source={require('../assets/movie2.jpg')}
@@ -72,6 +65,7 @@ export default function MovieScreen() {
         </Text>
       </View>
       <Cast cast={cast} navigation={navigation} />
+      <MovieList title="Similar Movies" hideSeeAll={true} data={similarMovies} />
     </ScrollView>
   );
 }
