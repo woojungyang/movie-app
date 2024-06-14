@@ -1,5 +1,6 @@
 import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
 import React from 'react';
+import { sliceLongText } from '../utilities';
 
 export default function Cast({ cast, navigation }) {
   let personName = 'Amy Poehler';
@@ -24,12 +25,8 @@ export default function Cast({ cast, navigation }) {
                 className="rounded-2xl h-24 w-20"
               />
             </View>
-            <Text className="text-white text-xs mt-1">
-              {characterName?.length > 10 ? characterName.slice(0, 10) + '...' : characterName}
-            </Text>
-            <Text className="text-gray-400 text-xs mt-1">
-              {personName?.length > 10 ? personName.slice(0, 10) + '...' : personName}
-            </Text>
+            <Text className="text-white text-xs mt-1">{sliceLongText(characterName, 10)}</Text>
+            <Text className="text-gray-400 text-xs mt-1">{sliceLongText(personName, 10)}</Text>
           </TouchableOpacity>
         ))}
       </ScrollView>

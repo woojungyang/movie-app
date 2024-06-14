@@ -2,10 +2,12 @@ import { View, Text, ScrollView, Image } from 'react-native';
 import React, { useState } from 'react';
 import { isPlatformIos, windowHeight, windowWidth } from '../utilities';
 import DefaultHeader from '../components/DefaultHeader';
+import MovieList from '../components/MovieList';
 
 export default function PersonScreen() {
   const [isFavorite, setIsFavorite] = useState(false);
   const verticalMargin = isPlatformIos ? '' : 'my-3';
+  const [personMovies, setPersonMovies] = useState([1, 2, 3, 4, 5]);
   return (
     <ScrollView className="flex-1 bg-gray-900" contentContainerStyle={{ paddingBottom: 20 }}>
       <DefaultHeader
@@ -53,6 +55,7 @@ export default function PersonScreen() {
             Out." Smith continues to be a beloved figure in the entertainment industry.
           </Text>
         </View>
+        <MovieList data={personMovies} title="Movies" hideSeeAll={true} />
       </View>
     </ScrollView>
   );

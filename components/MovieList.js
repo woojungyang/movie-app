@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { windowHeight, windowWidth } from '../utilities';
+import { sliceLongText, windowHeight, windowWidth } from '../utilities';
 
 export default function MovieList({ title, data, hideSeeAll = false }) {
   let movieName = 'InsideOut';
@@ -38,9 +38,7 @@ export default function MovieList({ title, data, hideSeeAll = false }) {
                   className="rounded-3xl"
                   style={{ width: windowWidth * 0.33, height: windowHeight * 0.22 }}
                 />
-                <Text className="text-gray-400 ml-1">
-                  {movieName.length > 14 ? movieName.slice(0, 14) + '....' : movieName}
-                </Text>
+                <Text className="text-gray-400 ml-1">{sliceLongText(movieName, 14)}</Text>
               </View>
             </TouchableWithoutFeedback>
           );
