@@ -8,6 +8,7 @@ import MovieList from '../components/MovieList';
 import { isPlatformIos } from '../utilities';
 import { useNavigation } from '@react-navigation/native';
 import Loading from '../components/Loading';
+import useApiQuery from '../hooks/useApiQuery';
 
 export default function HomeScreen() {
   const [loading, setLoading] = useState(false);
@@ -16,6 +17,8 @@ export default function HomeScreen() {
   const [topRated, setTopRated] = useState([1, 2, 3]);
 
   const navigation = useNavigation();
+
+  const { isLoading, data } = useApiQuery('/trending/movie/day', {});
 
   return (
     <View className="flex-1 bg-gray-900">
