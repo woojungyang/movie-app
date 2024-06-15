@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { sliceLongText, windowHeight, windowWidth } from '../utilities';
+import { convertImage, sliceLongText, windowHeight, windowWidth } from '../utilities';
 
 export default function MovieList({ title, data, hideSeeAll = false }) {
   let movieName = 'InsideOut';
@@ -31,14 +31,19 @@ export default function MovieList({ title, data, hideSeeAll = false }) {
       >
         {data?.map((item, index) => {
           return (
-            <TouchableWithoutFeedback key={index} onPress={() => navigation.push('Movie', item)}>
+            <TouchableWithoutFeedback key={index} onPress={() => navigation.push('Movie', item.id)}>
               <View className="space-y-1 mr-4">
                 <Image
-                  source={require('../assets/movie2.jpg')}
+                  source={{
+                    uri: convertImage(item.poster_path) ?? require('../assets/placeholder.png'),
+                  }}
                   className="rounded-3xl"
-                  style={{ width: windowWidth * 0.33, height: windowHeight * 0.22 }}
+                  style={{
+                    width: windowWidth * 0.33,
+                    height: windowHeight * 0.22,
+                  }}
                 />
-                <Text className="text-gray-400 ml-1">{sliceLongText(movieName, 14)}</Text>
+                <Text className="text-gray-400 ml-1">{sliceLongText(item.original_title, 14)}</Text>
               </View>
             </TouchableWithoutFeedback>
           );

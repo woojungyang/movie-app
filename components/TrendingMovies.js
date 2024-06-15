@@ -2,17 +2,18 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, Text, Dimensions, Image, TouchableWithoutFeedback } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
+import { convertImage } from '../utilities';
 
 const { width, height } = Dimensions.get('window');
 
 export default function TrendingMovies({ data }) {
   const navigation = useNavigation();
   function handleClick(item) {
-    navigation.navigate('Movie', item);
+    navigation.navigate('Movie', item.id);
   }
   return (
     <View className="mb-8">
-      <Text className="text-white text-xl mx-4 mb-5">Trending</Text>
+      <Text className="text-white text-xl mx-4 mb-5"></Text>
 
       <Carousel
         data={data}
@@ -31,7 +32,7 @@ const MovieCard = ({ item, handleClick }) => {
   return (
     <TouchableWithoutFeedback onPress={() => handleClick(item)}>
       <Image
-        source={require('../assets/movie1.jpg')}
+        source={{ uri: convertImage(item.poster_path) }}
         style={{ width: width * 0.6, height: height * 0.4 }}
         className="rounded-3xl"
       />
