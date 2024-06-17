@@ -1,17 +1,10 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  TouchableWithoutFeedback,
-  Image,
-} from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { convertImage, sliceLongText, windowHeight, windowWidth } from '../utilities';
+import ExpoImage from './ExpoImage';
 
 export default function MovieList({ title, data, hideSeeAll = false }) {
-  let movieName = 'InsideOut';
   const navigation = useNavigation();
 
   return (
@@ -33,16 +26,15 @@ export default function MovieList({ title, data, hideSeeAll = false }) {
           return (
             <TouchableWithoutFeedback key={index} onPress={() => navigation.push('Movie', item.id)}>
               <View className="space-y-1 mr-4">
-                <Image
-                  source={{
-                    uri: convertImage(item.poster_path) ?? require('../assets/placeholder.png'),
-                  }}
+                <ExpoImage
+                  uri={convertImage(item.poster_path)}
                   className="rounded-3xl"
                   style={{
                     width: windowWidth * 0.33,
                     height: windowHeight * 0.22,
                   }}
                 />
+
                 <Text className="text-gray-400 ml-1">{sliceLongText(item.original_title, 14)}</Text>
               </View>
             </TouchableWithoutFeedback>

@@ -1,15 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { View, Text, Dimensions, Image, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
-import { convertImage } from '../utilities';
-
-const { width, height } = Dimensions.get('window');
+import { convertImage, windowHeight, windowWidth } from '../utilities';
+import ExpoImage from './ExpoImage';
 
 export default function TrendingMovies({ data }) {
   const navigation = useNavigation();
-  function handleClick(item) {
-    navigation.navigate('Movie', item.id);
+  function handleClick(movieId) {
+    navigation.navigate('Movie', movieId);
   }
   return (
     <View className="mb-8">
@@ -19,8 +18,8 @@ export default function TrendingMovies({ data }) {
         data={data}
         firstItem={1}
         inactiveSlideOpacity={0.6}
-        sliderWidth={width}
-        itemWidth={width * 0.62}
+        sliderWidth={windowWidth}
+        itemWidth={windowWidth * 0.62}
         slideStyle={{ display: 'flex', alignItems: 'center' }}
         renderItem={({ item }) => <MovieCard item={item} handleClick={handleClick} />}
       />
@@ -30,12 +29,14 @@ export default function TrendingMovies({ data }) {
 
 const MovieCard = ({ item, handleClick }) => {
   return (
-    <TouchableWithoutFeedback onPress={() => handleClick(item)}>
-      <Image
-        source={{ uri: convertImage(item.poster_path) }}
-        style={{ width: width * 0.6, height: height * 0.4 }}
-        className="rounded-3xl"
-      />
+    <TouchableWithoutFeedback onPress={() => handleClick(item.id)}>
+      <View>
+        <ExpoImage
+          uri={convertImage(item.poster_path)}
+          style={{ width: windowWidth * 0.6, height: windowHeight * 0.4, backgroundColor: 'red' }}
+          className="rounded-3xl"
+        />
+      </View>
     </TouchableWithoutFeedback>
   );
 };

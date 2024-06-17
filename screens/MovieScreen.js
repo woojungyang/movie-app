@@ -1,5 +1,5 @@
-import { View, Text, ScrollView, TouchableOpacity, Dimensions, Image } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { View, Text, ScrollView } from 'react-native';
+import React, { useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { convertImage, isPlatformIos, windowHeight, windowWidth } from '../utilities';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -8,6 +8,7 @@ import MovieList from '../components/MovieList';
 import DefaultHeader from '../components/DefaultHeader';
 import useApiQuery from '../hooks/useApiQuery';
 import LoadingLayout from '../components/LoadingLayout';
+import ExpoImage from '../components/ExpoImage';
 
 export default function MovieScreen() {
   const navigation = useNavigation();
@@ -15,8 +16,6 @@ export default function MovieScreen() {
 
   const [isFavorite, setIsFavorite] = useState(false);
   const topMargin = isPlatformIos ? '' : 'mt-3';
-
-  const [cast, setCast] = useState([1, 2, 3, 4, 5]);
 
   const getMovieBaseUrl = `/movie/${movieId}`;
   const { isLoading: movieLoading, data: movie } = useApiQuery(
@@ -37,8 +36,6 @@ export default function MovieScreen() {
     { enabled: !!movieId }
   );
 
-  console.log(movieId);
-
   return (
     <LoadingLayout isLoading={movieLoading || castsLoading || similarLoading}>
       <ScrollView contentContainerStyle={{ paddingBottom: 20 }} className="flex-1 bg-gray-900">
@@ -50,8 +47,8 @@ export default function MovieScreen() {
             isAbsolute={true}
           />
           <View>
-            <Image
-              source={{ uri: convertImage(movie?.poster_path) }}
+            <ExpoImage
+              uri={convertImage(movie?.poster_path)}
               style={{ width: windowWidth, height: windowHeight * 0.55 }}
             />
             <LinearGradient
@@ -80,8 +77,10 @@ export default function MovieScreen() {
           </View>
           <Text className="text-gray-400 mx-4 tracking-wide">{movie?.overview}</Text>
         </View>
-        <Cast casts={casts?.cast} navigation={navigation} />
-        <MovieList title="Similar Movies" hideSeeAll={true} data={similarMovies?.results} />
+        {!!casts?.cast && <Cast casts={casts?.cast} navigation={navigation} />}
+        {!!similarMovies?.results?.length && (
+          <MovieList title="Similar Movies" hideSeeAll={true} data={similarMovies?.results} />
+        )}
       </ScrollView>
     </LoadingLayout>
   );

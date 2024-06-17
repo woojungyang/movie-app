@@ -13,18 +13,11 @@ import LoadingLayout from '../components/LoadingLayout';
 export default function HomeScreen() {
   const navigation = useNavigation();
 
-  const { isLoading: trendingMoviesLoading, data: trendingMovies } = useApiQuery(
-    '/trending/movie/day',
-    {}
-  );
-  const { isLoading: upComingMoviesLoading, data: upComingMovies } = useApiQuery(
-    '/movie/upcoming',
-    {}
-  );
-  const { isLoading: topRatedMoviesLoading, data: topRatedMovies } = useApiQuery(
-    '/movie/top_rated',
-    {}
-  );
+  const { isLoading: trendingMoviesLoading, data: trendingMovies } =
+    useApiQuery('/trending/movie/day');
+  const { isLoading: upComingMoviesLoading, data: upComingMovies } = useApiQuery('/movie/upcoming');
+  const { isLoading: topRatedMoviesLoading, data: topRatedMovies } =
+    useApiQuery('/movie/top_rated');
 
   return (
     <View className="flex-1 bg-gray-900">
